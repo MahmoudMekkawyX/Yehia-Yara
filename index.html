@@ -17,9 +17,8 @@
            1. VARIABLES & COLOR LOCK
            ===================================================== */
         :root {
-            /* استخدام ألوان صلبة (Solid) بدون أي شفافية */
             --red: #990303;
-            --red-dark: #750000; /* لون غامق للنصوص فوق الخلفيات الفاتحة */
+            --red-dark: #750000;
             --brown-text: #562931;
             --wine: #722f37;
             --gold: #b98c55;
@@ -54,7 +53,7 @@
         html, body {
             scrollbar-width: none;
             -ms-overflow-style: none;
-            forced-color-adjust: none; /* منع المتصفح من تغيير الألوان تلقائياً */
+            forced-color-adjust: none;
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
         }
@@ -68,8 +67,6 @@
             font-family: var(--font-body);
             font-size: 16px;
             line-height: 1.6;
-            
-            /* تحسين حدة النصوص وتثبيت الألوان */
             text-rendering: optimizeLegibility;
             font-synthesis: none;
             -webkit-font-smoothing: antialiased;
@@ -184,8 +181,58 @@
             color: var(--red);
         }
 
+        [data-reveal] {
+            opacity: 0;
+            transition: opacity .7s ease, transform .7s ease;
+            will-change: opacity, transform;
+        }
+        [data-reveal="up"]    { transform: translateY(20px); }
+        [data-reveal="left"]  { transform: translateX(-30px); }
+        [data-reveal="right"] { transform: translateX(30px); }
+        [data-reveal].is-visible { opacity: 1; transform: none; }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: var(--space-lg);
+        }
+        .divider__line {
+            width: 64px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .divider__dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .section-heading {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: var(--space-md);
+        }
+        .section-heading::after {
+            content: "";
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            line-height: 1.4;
+        }
+
         /* =====================================================
-           5. HERO (المشكلة كانت هنا - تم تغيير الألوان لغامق)
+           5. HERO (الألوان الغامقة الواضحة)
            ===================================================== */
         .cover {
             position: relative;
@@ -203,7 +250,6 @@
             overflow: hidden;
             background: var(--paper);
             text-align: center;
-            /* تم تغيير اللون الأساسي للنصوص ليكون غامقاً وواضحاً */
             color: var(--wine); 
         }
 
@@ -224,7 +270,6 @@
             z-index: 1;
         }
 
-        /* النصوص هنا أصبحت بلون عنابي غامق جداً لتباين واضح مع السماء الفاتحة */
         .hero__invite {
             position: absolute;
             inset-inline: 0;
@@ -233,8 +278,8 @@
             line-height: calc(var(--u) * 32);
             font-weight: 700;
             white-space: pre-line;
-            color: var(--wine); /* لون صلب */
-            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8); /* ظل خفيف لزيادة الوضوح */
+            color: var(--wine);
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
 
         .hero__names {
@@ -246,7 +291,7 @@
             line-height: calc(var(--u) * 60);
             font-weight: 700;
             white-space: pre-line;
-            color: var(--red-dark); /* لون عنابي غامق */
+            color: var(--red-dark);
             text-shadow: 0 2px 5px rgba(255, 255, 255, 0.9);
         }
 
@@ -278,7 +323,7 @@
             font-family: var(--font-date);
             font-weight: 700;
             white-space: nowrap;
-            color: var(--red-dark); /* لون صلب */
+            color: var(--red-dark);
             text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
         .hero__date { top: calc(var(--u) * 481); font-size: calc(var(--u) * 24); line-height: calc(var(--u) * 34); }
@@ -331,45 +376,54 @@
         }
 
         /* =====================================================
-           6. COUNTDOWN
+           6. COUNTDOWN (Refined Glassmorphism)
            ===================================================== */
         .block--countdown {
-            padding: var(--space-xs) 0;
+            padding: var(--space-lg) 0;
             background: var(--wine);
             color: var(--white);
         }
-        .block--countdown .section-title,
-        .block--countdown .countdown__subtitle,
-        .block--countdown .countdown__label,
-        .block--countdown .countdown__number {
-            color: var(--white); /* ألوان صلبة */
-        }
 
         .countdown {
-            padding: var(--space-xl) var(--space-sm) var(--space-lg);
+            padding: var(--space-xl) var(--space-sm);
             text-align: center;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .countdown__head {
+            margin-bottom: var(--space-sm);
+        }
+        .countdown__head::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            margin: var(--space-sm) auto 0;
+            border-radius: 2px;
         }
 
         .countdown__subtitle {
             margin-bottom: var(--space-lg);
-            font-size: 18px;
-            line-height: 28px;
+            font-size: 16px;
             color: var(--wine-subtitle);
+            opacity: 0.85;
         }
 
         .countdown__grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
             gap: 10px;
-            max-width: 400px;
-            margin-inline: auto;
         }
 
         .countdown__item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            width: 68px;
         }
 
         .countdown__box {
@@ -377,26 +431,28 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            aspect-ratio: 1 / 1;
-            border: 1px solid #a8787f;
-            border-radius: 12px;
-            background: #8a3b45; /* خلفية صلبة */
-            box-shadow: inset 0 1px 0 #a8545e, 0 4px 12px rgba(0,0,0,.15);
+            height: 68px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .countdown__number {
             font-family: var(--font-date);
-            font-size: clamp(20px, 6vw, 28px);
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--white);
             line-height: 1;
-            font-weight: 500;
             font-variant-numeric: tabular-nums;
         }
 
         .countdown__label {
-            font-size: 15px;
-            line-height: 20px;
+            font-size: 13px;
             font-weight: 700;
-            white-space: nowrap;
+            color: var(--gold); /* لون ذهبي للكلمات */
         }
 
         /* =====================================================
@@ -421,7 +477,7 @@
             text-align: center;
             border-radius: 24px;
             border: 1px solid #e8d9c4;
-            background: #ffffff; /* خلفية بيضاء صلبة لضمان ثبات اللون */
+            background: #ffffff;
             box-shadow: var(--shadow-card);
         }
 
@@ -511,7 +567,7 @@
 
         .timeline__content { display: flex; flex-direction: column; width: 100%; }
         .timeline__content--left { grid-column: 1; align-items: flex-end; padding-right: 20px; text-align: left; direction: ltr; }
-        .timeline__content--right { grid-column: 2; align-items: flex-start; padding-left: 20px; text-align: right; }
+        .timeline__content--right { grid-column: 2; align-items: flex-start; padding-left: 20px; text-align: right;}
 
         .timeline__time { font-family: var(--font-date); font-size: 22px; font-weight: 700; color: var(--wine); }
         .timeline__event { font-family: var(--font-main); font-size: 24px; font-weight: 700; color: var(--red); }
@@ -585,6 +641,9 @@
         @media (max-width: 380px) {
             .countdown { padding: var(--space-lg) 8px var(--space-md); }
             .countdown__grid { gap: 6px; }
+            .countdown__item { width: 60px; }
+            .countdown__box { height: 60px; }
+            .countdown__number { font-size: 22px; }
             .footer__business { font-size: 13px; }
         }
     </style>
@@ -624,10 +683,12 @@
 
             <section class="block block--countdown" id="countdown">
                 <div class="countdown">
-                    <h2 class="section-title">العد التنازلي</h2>
+                    <div class="countdown__head">
+                        <h2 class="section-title">العد التنازلي</h2>
+                    </div>
                     <p class="countdown__subtitle">مش قادرين نستنى اللحظة دي!</p>
 
-                    <div class="countdown__grid" role="timer">
+                    <div class="countdown__grid" role="timer" aria-live="off">
                         <div class="countdown__item">
                             <div class="countdown__box"><span class="countdown__number" id="cd-days">٠٠</span></div>
                             <span class="countdown__label">يوم</span>
@@ -679,9 +740,9 @@
             <section class="block" id="timeline">
                 <div class="timeline-section">
                     <div class="divider" aria-hidden="true">
-                        <span class="divider__line" style="width: 64px; height: 1px; background: var(--gold);"></span>
-                        <span class="divider__dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold);"></span>
-                        <span class="divider__line" style="width: 64px; height: 1px; background: var(--gold);"></span>
+                        <span class="divider__line"></span>
+                        <span class="divider__dot"></span>
+                        <span class="divider__line"></span>
                     </div>
 
                     <div class="timeline-section__head">
