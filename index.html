@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="notranslate">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light only">
+    <meta name="theme-color" content="#722f37">
+    <meta name="description" content="دعوة حفل زفاف يحيى ويارا">
+    <title>يحيى &amp; يارا</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;500;600&family=Lateef:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================
+           1. VARIABLES
+           ===================================================== */
+        :root {
+            --red: #990303;
+            --red-dark: #750000;
+            --brown-text: #562931;
+            --wine: #722f37;
+            --gold: #b98c55;
+            --gold-soft: rgba(185, 140, 85, .35);
+            --paper: #f8f5f2;
+            --green: #084c03;
+
+            --font-main: 'Noto Nastaliq Urdu', 'Amiri', serif;
+            --font-date: 'Reem Kufi', 'Amiri', sans-serif;
+            --font-body: 'Amiri', 'Lateef', serif;
+
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 40px;
+            --space-xl: 64px;
+
+            --shadow-soft: 0 6px 24px rgba(86, 41, 49, .08);
+            --shadow-card: 0 10px 30px rgba(86, 41, 49, .12);
+        }
+
+        /* =====================================================
+           2. RESET
+           ===================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar,
+        *::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+        body {
+            min-height: 100%;
+            background: var(--paper);
+            color: var(--brown-text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img, video { display: block; max-width: 100%; }
+        button { font: inherit; color: inherit; }
+
+        h1, h2, h3,
+        .section-title,
+        .location__title,
+        .timeline-section__title {
+            font-family: var(--font-main);
+            font-weight: 700;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* =====================================================
+           3. ENVELOPE INTRO
+           ===================================================== */
+        body.intro-locked {
+            overflow: hidden;
+            height: 100%;
+            touch-action: manipulation;
+        }
+        body.intro-locked .page,
+        body.intro-locked .scroll-hint,
+        body.intro-locked .music-toggle {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .envelope-intro {
+            position: fixed;
+            inset: 0;
+            z-index: 2147483647;
+            overflow: hidden;
+            background: var(--paper);
+            transition: opacity .55s ease, visibility .55s ease;
+        }
+        .envelope-intro.is-finished {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .envelope-intro__video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: var(--paper);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .envelope-intro__hint {
+            position: absolute;
+            left: 50%;
+            bottom: max(9%, 42px);
+            transform: translateX(-50%);
+            color: #8b6b43;
+            font-family: var(--font-main);
+            font-size: clamp(26px, 7vw, 38px);
+            line-height: 1.4;
+            white-space: nowrap;
+            pointer-events: none;
+            animation: tap-open-float 2s ease-in-out infinite;
+        }
+        .envelope-intro__hint::after {
+            content: '';
+            display: block;
+            width: 42px;
+            height: 1px;
+            margin: 8px auto 0;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        @keyframes tap-open-float {
+            0%, 100% { opacity: .82; transform: translate(-50%, 0); }
+            50%      { opacity: 1;   transform: translate(-50%, -5px); }
+        }
+
+        /* =====================================================
+           4. PAGE FRAME
+           ===================================================== */
+        .page {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: clip;
+        }
+
+        .invitation {
+            position: relative;
+            width: min(100%, 520px);
+            min-height: 100dvh;
+            overflow: hidden;
+        }
+
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            background: var(--paper);
+        }
+
+        .block {
+            position: relative;
+            z-index: 1;
+            padding: var(--space-xs) var(--space-sm);
+            color: var(--red);
+        }
+
+        [data-reveal] {
+            opacity: 0;
+            transition: opacity .7s ease, transform .7s ease;
+            will-change: opacity, transform;
+        }
+        [data-reveal="up"]    { transform: translateY(20px); }
+        [data-reveal="left"]  { transform: translateX(-30px); }
+        [data-reveal="right"] { transform: translateX(30px); }
+        [data-reveal].is-visible { opacity: 1; transform: none; }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: var(--space-lg);
+        }
+        .divider__line {
+            width: 64px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: .9;
+        }
+        .divider__dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .section-heading {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: var(--space-md);
+        }
+        .section-heading::after {
+            content: "";
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            opacity: .5;
+            border-radius: 2px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            line-height: 1.4;
+        }
+
+        /* =====================================================
+           5. HERO
+           ===================================================== */
+        .cover {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 390 / 693.333;
+            overflow: hidden;
+            container-type: inline-size;
+        }
+
+        .cover__stage {
+            --u: calc(100cqw / 390);
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            color: var(--red-dark);
+            text-align: center;
+        }
+
+        .hero-bg-video {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .hero {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .hero__invite {
+            position: absolute;
+            inset-inline: 0;
+            top: calc(var(--u) * 80);
+            font-size: calc(var(--u) * 20);
+            line-height: calc(var(--u) * 32);
+            font-weight: 700;
+            white-space: pre-line;
+        }
+
+        .hero__names {
+            position: absolute;
+            inset-inline: 0;
+            top: calc(var(--u) * 200);
+            font-family: var(--font-main);
+            font-size: calc(var(--u) * 46);
+            line-height: calc(var(--u) * 60);
+            font-weight: 700;
+            white-space: pre-line;
+        }
+
+        .hero__ornament {
+            position: absolute;
+            left: 50%;
+            top: calc(var(--u) * 425);
+            display: flex;
+            align-items: center;
+            gap: calc(var(--u) * 6.7);
+            transform: translateX(-50%);
+        }
+        .hero__ornament-line {
+            width: calc(var(--u) * 40.3);
+            height: 1px;
+            background: var(--red-dark);
+            opacity: .5;
+        }
+        .hero__ornament-diamond {
+            width: calc(var(--u) * 5);
+            height: calc(var(--u) * 5);
+            background: var(--red-dark);
+            opacity: .5;
+            transform: rotate(45deg);
+        }
+
+        .hero__date,
+        .hero__time {
+            position: absolute;
+            inset-inline: 0;
+            font-family: var(--font-date);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .hero__date { top: calc(var(--u) * 481); font-size: calc(var(--u) * 24); line-height: calc(var(--u) * 34); }
+        .hero__time { top: calc(var(--u) * 460); font-size: calc(var(--u) * 18); line-height: calc(var(--u) * 28); opacity: .85; }
+
+        .scroll-hint {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 6rem;
+            z-index: 2147483600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+        .scroll-hint.is-hidden { opacity: 0; }
+
+        .scroll-hint__text {
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 700;
+            color: var(--red-dark);
+        }
+        .scroll-hint__mouse {
+            display: flex;
+            justify-content: center;
+            width: 24px;
+            height: 40px;
+            padding: 8px;
+            border: 2px solid var(--red-dark);
+            border-radius: 9999px;
+        }
+        .scroll-hint__dot {
+            width: 4px;
+            height: 8px;
+            border-radius: 9999px;
+            background: var(--red-dark);
+            animation: scroll-dot 1.5s ease-in-out infinite;
+        }
+        @keyframes scroll-dot {
+            0%   { transform: translateY(0);  opacity: 1; }
+            70%  { transform: translateY(12px); opacity: 0; }
+            100% { transform: translateY(0);  opacity: 0; }
+        }
+
+        /* =====================================================
+           6. COUNTDOWN
+           ===================================================== */
+        .block--countdown {
+            padding: var(--space-xs) 0;
+            background: var(--wine);
+            color: #fff;
+        }
+        .block--countdown .section-title,
+        .block--countdown .countdown__subtitle,
+        .block--countdown .countdown__label,
+        .block--countdown .countdown__number {
+            color: #fff;
+        }
+
+        .countdown {
+            padding: var(--space-xl) var(--space-sm) var(--space-lg);
+            text-align: center;
+        }
+
+        .countdown__head {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: var(--space-sm);
+        }
+        .countdown__head::after {
+            content: "";
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            opacity: .7;
+            border-radius: 2px;
+        }
+
+        .countdown__subtitle {
+            margin-bottom: var(--space-lg);
+            font-size: 18px;
+            line-height: 28px;
+            opacity: .9;
+        }
+
+        .countdown__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin-inline: auto;
+        }
+
+        .countdown__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .countdown__box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 1px solid rgba(255, 255, 255, .22);
+            border-radius: 12px;
+            background: linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 6px 16px rgba(0,0,0,.12);
+        }
+
+        .countdown__number {
+            font-family: var(--font-date);
+            font-size: clamp(20px, 6vw, 28px);
+            line-height: 1;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .countdown__label {
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: .9;
+        }
+
+        /* =====================================================
+           7. LOCATION
+           ===================================================== */
+        .location {
+            padding: var(--space-xl) 0;
+        }
+
+        .location__header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .location__title {
+            font-size: 44px;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        .location__image {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: auto;
+            margin-bottom: -50px;
+            filter: drop-shadow(0 12px 18px rgba(86,41,49,.18));
+        }
+
+        .location__card {
+            position: relative;
+            z-index: 1;
+            padding: var(--space-lg) var(--space-md) var(--space-md);
+            text-align: center;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, .78);
+            border: 1px solid rgba(185, 140, 85, .25);
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .location__pin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            margin: 0 auto var(--space-sm);
+            border: 2px solid var(--green);
+            border-radius: 50%;
+            background: var(--paper);
+            color: var(--green);
+            box-shadow: 0 6px 14px rgba(8, 76, 3, .15);
+        }
+        .location__pin svg { width: 22px; height: 22px; }
+
+        .location__name {
+            margin-bottom: var(--space-md);
+            font-family: var(--font-main);
+            font-size: 26px;
+            line-height: 1.5;
+            font-weight: 700;
+            color: var(--red);
+        }
+
+        .directions {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 22px 10px 18px;
+            border: 1px solid rgba(125, 54, 65, .3);
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, .85);
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: border-color .3s, background-color .3s, transform .2s, box-shadow .3s;
+        }
+        .directions:hover,
+        .directions:focus-visible {
+            border-color: var(--red);
+            background: #fff;
+            box-shadow: 0 8px 18px rgba(153, 3, 3, .12);
+            outline: none;
+        }
+        .directions:active { transform: scale(.98); }
+
+        .directions__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(153, 3, 3, .1);
+            color: var(--red);
+            flex-shrink: 0;
+        }
+        .directions__icon svg { width: 16px; height: 16px; }
+
+        .directions__text { text-align: right; }
+        .directions__title {
+            display: block;
+            font-size: 17px;
+            line-height: 22px;
+            font-weight: 700;
+            color: var(--brown-text);
+        }
+        .directions__sub {
+            display: block;
+            font-size: 13px;
+            line-height: 18px;
+            color: rgba(86, 41, 49, .7);
+        }
+        .directions__external {
+            width: 15px;
+            height: 15px;
+            margin-inline-start: 4px;
+            opacity: .7;
+            flex-shrink: 0;
+        }
+
+        /* =====================================================
+           8. TIMELINE
+           ===================================================== */
+        .timeline-section {
+            position: relative;
+            z-index: 30;
+            padding: var(--space-xl) 0;
+        }
+
+        .timeline-section__head {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .timeline-section__icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: var(--space-sm);
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(86,41,49,.15));
+        }
+
+        .timeline-section__title {
+            font-size: 32px;
+            line-height: 1.4;
+        }
+
+        .timeline {
+            position: relative;
+            padding: var(--space-sm) 0;
+            margin-bottom: var(--space-md);
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, var(--gold), transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline__item {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding-block: var(--space-sm);
+        }
+        .timeline__item + .timeline__item { margin-top: var(--space-sm); }
+
+        .timeline__dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            background: var(--paper);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 4px rgba(185, 140, 85, .15);
+        }
+
+        .timeline__content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .timeline__content--left {
+            grid-column: 1;
+            align-items: flex-end;
+            padding-right: 20px;
+            text-align: left;
+            direction: ltr;
+        }
+        .timeline__content--right {
+            grid-column: 2;
+            align-items: flex-start;
+            padding-left: 20px;
+            text-align: right;
+        }
+
+        .timeline__time {
+            font-family: var(--font-date);
+            font-size: 22px;
+            line-height: 1.4;
+            font-weight: 500;
+            color: var(--wine);
+        }
+        .timeline__event {
+            font-family: var(--font-main);
+            font-size: 24px;
+            line-height: 1.5;
+            font-weight: 700;
+            color: var(--red);
+        }
+
+        /* =====================================================
+           9. FOOTER
+           ===================================================== */
+        .footer {
+            position: relative;
+            z-index: 1;
+            padding: var(--space-md) var(--space-sm);
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+            color: #fff;
+            background: var(--wine);
+        }
+
+        .footer__business {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+        }
+
+        .footer__heart {
+            color: #f87171;
+            display: inline-block;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+        }
+
+        .footer__sep {
+            color: rgba(255, 255, 255, .4);
+            font-size: 12px;
+        }
+
+        .footer__business a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 1px dashed rgba(255, 255, 255, .5);
+            padding-bottom: 1px;
+            transition: color .3s ease, border-color .3s ease;
+        }
+        .footer__business a:hover,
+        .footer__business a:focus-visible {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+            outline: none;
+        }
+
+        .footer__phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, .1);
+            font-family: var(--font-date);
+            font-variant-numeric: tabular-nums;
+            direction: ltr;
+            unicode-bidi: embed;
+            font-size: 12.5px;
+            opacity: .95;
+        }
+
+        /* =====================================================
+           10. MUSIC BUTTON
+           ===================================================== */
+        .music-toggle {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 2147483601;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 9999px;
+            background: rgba(30, 30, 30, .85);
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0,0,0,.25);
+            transition: background-color .3s, transform .2s;
+        }
+        .music-toggle:hover { background: rgba(30, 30, 30, 1); }
+        .music-toggle:active { transform: scale(.94); }
+        .music-toggle:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+        .music-toggle svg { width: 20px; height: 20px; }
+        .music-toggle .icon-off { display: none; }
+        .music-toggle.is-muted .icon-on { display: none; }
+        .music-toggle.is-muted .icon-off { display: block; }
+
+        /* =====================================================
+           11. RESPONSIVE
+           ===================================================== */
+        @media (max-width: 380px) {
+            .countdown { padding: var(--space-lg) 8px var(--space-md); }
+            .countdown__grid { gap: 6px; }
+            .countdown__label { font-size: 13px; }
+            .location__card { padding: var(--space-md) var(--space-sm); }
+            .footer__business { font-size: 13px; }
+        }
+    </style>
+</head>
+
+<body class="intro-locked">
+
+    <!-- Envelope intro -->
+    <div class="envelope-intro" id="envelopeIntro" role="button" tabindex="0" aria-label="اضغط لفتح الدعوة">
+        <video class="envelope-intro__video"
+               id="envelopeIntroVideo"
+               src="images/ivory-glow-envelope.mp4"
+               poster="images/poster.jpg"
+               muted playsinline preload="metadata"></video>
+        <div class="envelope-intro__hint" aria-hidden="true">اضغط لفتح الدعوة</div>
+    </div>
+
+    <!-- Background video (page-wide) -->
+    <video class="bg-video" src="images/block-bg-animated-lakeside-romance-loop.mp4"
+           autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
+
+    <div class="page">
+        <main class="invitation">
+
+            <!-- HERO -->
+            <header class="cover" id="cover">
+                <div class="cover__stage">
+                    <video class="hero-bg-video"
+                           src="images/ivory-gypsophila-theme.mp4"
+                           autoplay loop muted playsinline preload="auto"
+                           aria-hidden="true"></video>
+
+                    <div class="hero">
+                        <p class="hero__invite">يتشرفان بدعوتكم&#10;لحضور حفل زفافهما</p>
+                        <h1 class="hero__names">يحيى&#10;و&#10;يارا</h1>
+
+                        <div class="hero__ornament" aria-hidden="true">
+                            <span class="hero__ornament-line"></span>
+                            <span class="hero__ornament-diamond"></span>
+                            <span class="hero__ornament-line"></span>
+                        </div>
+
+                        <p class="hero__date">١١ / ١١ / ٢٠٢٦</p>
+                        <p class="hero__time">الحضور ٦ مساءً</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- COUNTDOWN -->
+            <section class="block block--countdown" id="countdown">
+                <div class="countdown">
+                    <div class="countdown__head">
+                        <h2 class="section-title">العد التنازلي</h2>
+                    </div>
+                    <p class="countdown__subtitle">مش قادرين نستنى اللحظة دي!</p>
+
+                    <div class="countdown__grid" role="timer" aria-live="off">
+                        <div class="countdown__item">
+                            <div class="countdown__box"><span class="countdown__number" id="cd-days">٠٠</span></div>
+                            <span class="countdown__label">يوم</span>
+                        </div>
+                        <div class="countdown__item">
+                            <div class="countdown__box"><span class="countdown__number" id="cd-hours">٠٠</span></div>
+                            <span class="countdown__label">ساعة</span>
+                        </div>
+                        <div class="countdown__item">
+                            <div class="countdown__box"><span class="countdown__number" id="cd-minutes">٠٠</span></div>
+                            <span class="countdown__label">دقيقة</span>
+                        </div>
+                        <div class="countdown__item">
+                            <div class="countdown__box"><span class="countdown__number" id="cd-seconds">٠٠</span></div>
+                            <span class="countdown__label">ثانية</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOCATION -->
+            <section class="block" id="location">
+                <div class="location" data-reveal="up">
+                    <div class="location__header">
+                        <h2 class="location__title">المكان</h2>
+                    </div>
+
+                    <img class="location__image" src="images/venue-barn-nobg.png" alt="" loading="lazy">
+
+                    <div class="location__card">
+                        <div class="location__pin" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+
+                        <p class="location__name">Andulsia Venue</p>
+
+                        <a class="directions" id="directions"
+                           href="https://maps.app.goo.gl/6JwtZrt3AVZmGc7SA"
+                           target="_blank" rel="noopener noreferrer">
+                            <span class="directions__icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                            </span>
+                            <span class="directions__text">
+                                <span class="directions__title">احصل على الاتجاهات</span>
+                                <span class="directions__sub">افتح في خرائط جوجل</span>
+                            </span>
+                            <svg class="directions__external" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TIMELINE -->
+            <section class="block" id="timeline">
+                <div class="timeline-section" data-reveal="up">
+                    <div class="divider" aria-hidden="true">
+                        <span class="divider__line"></span>
+                        <span class="divider__dot"></span>
+                        <span class="divider__line"></span>
+                    </div>
+
+                    <div class="timeline-section__head">
+                        <img class="timeline-section__icon" src="images/icon-timeline.png" alt="" loading="lazy">
+                        <h2 class="timeline-section__title">برنامج الحفل</h2>
+                    </div>
+
+                    <div class="timeline" dir="ltr">
+                        <div class="timeline__item" data-reveal="left">
+                            <span class="timeline__dot"></span>
+                            <div class="timeline__content timeline__content--left">
+                                <p class="timeline__time">٦ مساءً</p>
+                            </div>
+                            <div class="timeline__content timeline__content--right">
+                                <h3 class="timeline__event">الحضور</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <p class="footer__business" dir="rtl">
+                    <span class="footer__heart" aria-hidden="true">&#10084;</span>
+                    <span>تصميم وتطوير</span>
+                    <a href="https://wa.me/message/MYW5ONKYHHKIL1" target="_blank" rel="noopener noreferrer">محمود المكاوي
+                        <span class="footer__sep" aria-hidden="true">•</span>
+                    <span class="footer__phone">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.5-.7-2.5-1.7-3.4-3.1-.3-.4-.3-.6-.1-.8.2-.2.5-.6.7-.9.1-.2.1-.4 0-.6-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.5 1.1 3 1.2 3.2.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+                        01126847953
+                    </span>
+                    </a>
+                    
+                </p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- scroll hint -->
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+        <span class="scroll-hint__text">اسحب لأسفل لمزيد من التفاصيل</span>
+        <div class="scroll-hint__mouse"><div class="scroll-hint__dot"></div></div>
+    </div>
+
+    <!-- background music -->
+    <audio id="bgm" src="images/romantic-piano.mp3" loop preload="auto"></audio>
+    <button class="music-toggle" id="musicToggle" type="button" aria-label="تشغيل / إيقاف الصوت" aria-pressed="true">
+        <svg class="icon-on" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        <svg class="icon-off" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    </button>
+
+    <script>
+    (() => {
+        'use strict';
+
+        const $ = id => document.getElementById(id);
+        const arDigits = '٠١٢٣٤٥٦٧٨٩';
+        const toAr = s => String(s).replace(/\d/g, d => arDigits[d]);
+        const pad = n => toAr(String(n).padStart(2, '0'));
+
+        /* 1. Videos & Envelope */
+        const intro = $('envelopeIntro');
+        const introVideo = $('envelopeIntroVideo');
+        const videos = document.querySelectorAll('video:not(.envelope-intro__video)');
+        const music = $('bgm');
+        const musicToggle = $('musicToggle');
+        const scrollHint = $('scrollHint');
+
+        let introStarted = false;
+        let invitationRevealed = false;
+        let envelopeFallbackTimer = null;
+        let musicWanted = true;
+
+        function revealInvitation() {
+            if (invitationRevealed) return;
+            invitationRevealed = true;
+
+            if (envelopeFallbackTimer) {
+                clearTimeout(envelopeFallbackTimer);
+                envelopeFallbackTimer = null;
+            }
+
+            intro.classList.add('is-finished');
+            document.body.classList.remove('intro-locked');
+            setTimeout(() => { intro.hidden = true; }, 600);
+            playVideos();
+        }
+
+        function startEnvelope(event) {
+            if (event) { event.preventDefault(); event.stopPropagation(); }
+            if (introStarted || invitationRevealed) return;
+
+            if (!intro || !introVideo) { revealInvitation(); return; }
+            introStarted = true;
+
+            if (music) {
+                music.volume = 0.6;
+                musicWanted = true;
+                const p = music.play();
+                if (p && p.catch) p.catch(() => {});
+            }
+
+            try {
+                introVideo.pause();
+                introVideo.currentTime = 0;
+            } catch (_) {}
+
+            let playPromise;
+            try {
+                playPromise = introVideo.play();
+            } catch (err) {
+                console.warn('Envelope video could not start:', err);
+                revealInvitation();
+                return;
+            }
+
+            if (playPromise && typeof playPromise.then === 'function') {
+                playPromise.then(() => {
+                    const duration = Number.isFinite(introVideo.duration)
+                        ? introVideo.duration * 1000 + 2500
+                        : 15000;
+                    envelopeFallbackTimer = setTimeout(revealInvitation, Math.max(5000, duration));
+                }).catch(err => {
+                    console.warn('Envelope video playback blocked:', err);
+                    revealInvitation();
+                });
+            } else {
+                envelopeFallbackTimer = setTimeout(revealInvitation, 15000);
+            }
+        }
+
+        if (intro) {
+            intro.addEventListener('click', startEnvelope);
+            intro.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') startEnvelope(e);
+            });
+        }
+
+        if (introVideo) {
+            introVideo.addEventListener('ended', revealInvitation);
+            introVideo.addEventListener('error', () => {
+                console.warn('Envelope video could not load.');
+                revealInvitation();
+            });
+        }
+
+        function playVideos() {
+            videos.forEach(v => {
+                v.muted = true;
+                v.defaultMuted = true;
+                v.loop = true;
+                v.playsInline = true;
+                v.setAttribute('muted', '');
+                v.setAttribute('playsinline', '');
+                v.setAttribute('webkit-playsinline', '');
+
+                if (v.readyState === 0) {
+                    try { v.load(); } catch (_) {}
+                }
+
+                const attemptPlay = () => {
+                    const p = v.play();
+                    if (p && typeof p.catch === 'function') {
+                        p.catch(err => console.warn('Video playback blocked:', v.currentSrc || v.src, err));
+                    }
+                };
+
+                if (v.readyState >= 2) attemptPlay();
+                else v.addEventListener('canplay', attemptPlay, { once: true });
+            });
+        }
+
+        videos.forEach(v => {
+            v.addEventListener('playing', () => v.classList.add('video-ready'));
+            v.addEventListener('error', () => console.warn('Video could not load:', v.currentSrc || v.src));
+        });
+
+        playVideos();
+        window.addEventListener('pageshow', playVideos);
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) playVideos();
+        });
+        document.addEventListener('touchstart', playVideos, { once: true, passive: true });
+
+        /* 2. Countdown */
+        const weddingDate = new Date(2026, 10, 11, 17, 0, 0).getTime();
+        const cd = {
+            days: $('cd-days'),
+            hours: $('cd-hours'),
+            minutes: $('cd-minutes'),
+            seconds: $('cd-seconds')
+        };
+
+        let countdownTimer = null;
+
+        function updateCountdown() {
+            const total = Math.floor(Math.max(0, weddingDate - Date.now()) / 1000);
+            cd.days.textContent = toAr(Math.floor(total / 86400));
+            cd.hours.textContent = pad(Math.floor((total % 86400) / 3600));
+            cd.minutes.textContent = pad(Math.floor((total % 3600) / 60));
+            cd.seconds.textContent = pad(total % 60);
+            if (total === 0 && countdownTimer) clearInterval(countdownTimer);
+        }
+
+        updateCountdown();
+        countdownTimer = setInterval(updateCountdown, 1000);
+
+        /* 3. Reveal on scroll */
+        const revealItems = document.querySelectorAll('[data-reveal]');
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            revealItems.forEach(item => observer.observe(item));
+        } else {
+            revealItems.forEach(item => item.classList.add('is-visible'));
+        }
+
+        if (scrollHint) {
+            const hideHint = () => {
+                if (window.scrollY > 80) {
+                    scrollHint.classList.add('is-hidden');
+                    window.removeEventListener('scroll', hideHint);
+                }
+            };
+            window.addEventListener('scroll', hideHint, { passive: true });
+        }
+
+        /* 4. Music */
+        if (music) music.volume = 0.6;
+
+        function updateMusicButton() {
+            if (!music || !musicToggle) return;
+            const muted = music.paused;
+            musicToggle.classList.toggle('is-muted', muted);
+            musicToggle.setAttribute('aria-pressed', String(!muted));
+        }
+
+        function startMusic() {
+            if (!musicWanted || document.body.classList.contains('intro-locked')) return;
+            if (!music) return;
+            const p = music.play();
+            if (p && p.catch) p.catch(() => {});
+        }
+
+        ['pointerdown', 'touchend', 'click', 'keydown', 'wheel'].forEach(type => {
+            document.addEventListener(type, function handler() {
+                if (document.body.classList.contains('intro-locked')) return;
+                if (!music || !music.paused) {
+                    document.removeEventListener(type, handler);
+                    return;
+                }
+                startMusic();
+            }, { passive: true });
+        });
+
+        if (musicToggle) {
+            musicToggle.addEventListener('click', e => {
+                e.stopPropagation();
+                if (!music) return;
+                if (music.paused) {
+                    musicWanted = true;
+                    music.play().catch(() => {});
+                } else {
+                    musicWanted = false;
+                    music.pause();
+                }
+            });
+        }
+
+        if (music) {
+            music.addEventListener('play', updateMusicButton);
+            music.addEventListener('pause', updateMusicButton);
+        }
+        startMusic();
+        updateMusicButton();
+    })();
+    </script>
+
+</body>
+</html>
